@@ -7,12 +7,12 @@ import pickle
 import os
 
 n_bins = 15
+seeds = [100,200,300,400,500,600,700,800,900,1000,2100,2200,2300,2400,2500,2600,2700,2800,2900,21000,3100,3200,3300,3400,3500,3600,3700,3800,3900,31000]
 
-
-for seed in list(range(10)):
+for seed in seeds:
 
     for h in range(0, 11):
-        file_name = os.path.join(os.pardir, os.pardir, "repeating_pattern_data", "autonomy_s" + str((seed+1)*100) + "_hp" + str(h / 10.) + ".hdf5")
+        file_name = os.path.join(os.pardir, os.pardir, "repeating_pattern_data", "autonomy_s" + str(seed) + "_hp" + str(h / 10.) + ".hdf5")
 
         with h5py.File(file_name, 'r') as h5_file:
 
@@ -147,4 +147,4 @@ for seed in list(range(10)):
                 unique_zs.append(result[8])
 
             pickle.dump((NTIC1s, NTIC2s, Ass, Ams, NTIC, normalisings, shareds, synergistics, unique_ys, unique_zs),
-                        open(os.path.join(os.pardir, os.pardir, "results", "s_" + str((seed+1)*100) + "_h_" + str(h / 10.) + ".pkl"), "wb"))
+                        open(os.path.join(os.pardir, os.pardir, "results", "s_" + str(seed) + "_h_" + str(h / 10.) + ".pkl"), "wb"))

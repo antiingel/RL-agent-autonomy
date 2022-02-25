@@ -3,10 +3,11 @@ import pickle
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+import scipy.stats
 import h5py
 
 n_prbs = 11
-seeds = [100,200,300,400,500,600,700,800,900,1000]
+seeds = [100,200,300,400,500,600,700,800,900,1000,2100,2200,2300,2400,2500,2600,2700,2800,2900,21000,3100,3200,3300,3400,3500,3600,3700,3800,3900,31000]
 n_seeds = len(seeds)
 NTIC1s, NTIC2s, Ass, Ams, NTICs, normalisings, shareds, synergistics, unique_ys, unique_zs = np.zeros((n_prbs, n_seeds)),np.zeros((n_prbs, n_seeds)),np.zeros((n_prbs, n_seeds)),np.zeros((n_prbs, n_seeds)),np.zeros((n_prbs, n_seeds)),np.zeros((n_prbs, n_seeds)),np.zeros((n_prbs, n_seeds)),np.zeros((n_prbs, n_seeds)),np.zeros((n_prbs, n_seeds)),np.zeros((n_prbs, n_seeds))
 successes, success_hiddens = np.zeros((n_prbs, n_seeds)),np.zeros((n_prbs, n_seeds))
@@ -95,19 +96,22 @@ for seedi, seed in enumerate(seeds):
             successes[prbi, seedi] = (np.mean(success[-n_elem:]))
             success_hiddens[prbi, seedi] = (np.nanmean(success_hidden[-n_elem:]))
 
+n = NTIC1s.shape[1]
+confidence = 0.95
+v = scipy.stats.t.ppf((1 + confidence) / 2., n-1)
 
-NTIC1sd = np.std(NTIC1s, axis=1)
-NTIC2sd = np.std(NTIC2s, axis=1)
-Assd = np.std(Ass, axis=1)
-Amsd = np.std(Ams, axis=1)
-NTICsd = np.std(NTICs, axis=1)
-normalisingsd = np.std(normalisings, axis=1)
-sharedsd = np.std(shareds, axis=1)
-synergisticsd = np.std(synergistics, axis=1)
-unique_ysd = np.std(unique_ys, axis=1)
-unique_zsd = np.std(unique_zs, axis=1)
-successsd = np.std(successes, axis=1)
-success_hiddensd = np.std(success_hiddens, axis=1)
+NTIC1sd = scipy.stats.sem(NTIC1s, axis=1)*v
+NTIC2sd = scipy.stats.sem(NTIC2s, axis=1)*v
+Assd = scipy.stats.sem(Ass, axis=1)*v
+Amsd = scipy.stats.sem(Ams, axis=1)*v
+NTICsd = scipy.stats.sem(NTICs, axis=1)*v
+normalisingsd = scipy.stats.sem(normalisings, axis=1)*v
+sharedsd = scipy.stats.sem(shareds, axis=1)*v
+synergisticsd = scipy.stats.sem(synergistics, axis=1)*v
+unique_ysd = scipy.stats.sem(unique_ys, axis=1)*v
+unique_zsd = scipy.stats.sem(unique_zs, axis=1)*v
+successsd = scipy.stats.sem(successes, axis=1)*v
+success_hiddensd = scipy.stats.sem(success_hiddens, axis=1)*v
 
 NTIC1s = np.mean(NTIC1s, axis=1)
 NTIC2s = np.mean(NTIC2s, axis=1)
@@ -122,15 +126,15 @@ unique_zs = np.mean(unique_zs, axis=1)
 successes = np.mean(successes, axis=1)
 success_hiddens = np.mean(success_hiddens, axis=1)
 
-NTIC1nsd = np.std(NTIC1ns, axis=1)
-NTIC2nsd = np.std(NTIC2ns, axis=1)
-Asnsd = np.std(Asns, axis=1)
-Amnsd = np.std(Amns, axis=1)
-NTICnsd = np.std(NTICns, axis=1)
-sharednsd = np.std(sharedns, axis=1)
-synergisticnsd = np.std(synergisticns, axis=1)
-unique_ynsd = np.std(unique_yns, axis=1)
-unique_znsd = np.std(unique_zns, axis=1)
+NTIC1nsd = scipy.stats.sem(NTIC1ns, axis=1)*v
+NTIC2nsd = scipy.stats.sem(NTIC2ns, axis=1)*v
+Asnsd = scipy.stats.sem(Asns, axis=1)*v
+Amnsd = scipy.stats.sem(Amns, axis=1)*v
+NTICnsd = scipy.stats.sem(NTICns, axis=1)*v
+sharednsd = scipy.stats.sem(sharedns, axis=1)*v
+synergisticnsd = scipy.stats.sem(synergisticns, axis=1)*v
+unique_ynsd = scipy.stats.sem(unique_yns, axis=1)*v
+unique_znsd = scipy.stats.sem(unique_zns, axis=1)*v
 
 NTIC1ns = np.mean(NTIC1ns, axis=1)
 NTIC2ns = np.mean(NTIC2ns, axis=1)
