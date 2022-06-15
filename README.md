@@ -22,3 +22,6 @@ Grid environment is a simple setting of Markov decision process (MDP). For grid 
 
 Repeating-pattern environment is formalised as a partially observable Markov decision process (POMDP). For repeating-pattern environment the code can be ran in the order as indicated by the numbers in file names: first `1_calculate_autonomy.py` and then any other file. Note that result files are already present in the folder `results`, thus one can produce plots right away by running the corresponding scripts.
 
+## Contact
+
+For additional information, feel free to contact Anti Ingel (antiingel@gmail.com).
